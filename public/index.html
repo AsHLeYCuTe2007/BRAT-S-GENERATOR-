@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurapkia Bart's Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Permanent+Marker&family=Kalam:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --board-frame: #e2e8f0;
+            --board-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+      
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #2563eb, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        p.subtitle {
+            color: #6b7280;
+            margin-top: 8px;
+            font-size: 1.1rem;
+        }
+
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        
+        .controls-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-family: 'Permanent Marker', cursive;
+            color: #374151;
+            background: #f9fafb;
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea::placeholder {
+            color: #9ca3af;
+            opacity: 0.7;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tool-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 12px;
+            background: #f3f4f6;
+            padding: 8px;
+            border-radius: 50px;
+        }
+
+        .color-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .color-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .color-btn.active {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--selected-color, #000);
+            z-index: 1;
+        }
+
+  
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        
+        .board-frame {
+            position: relative;
+            background: #fff;
+            border-radius: 4px;
+            
+            border: 12px solid #d1d5db;
+            border-top-color: #e5e7eb;
+            border-left-color: #9ca3af;
+            border-bottom-color: #9ca3af;
+            border-right-color: #e5e7eb;
+            box-shadow: 
+                inset 0 0 20px rgba(0,0,0,0.05),
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        
+        .board-frame::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -14px;
+            right: -14px;
+            height: 12px;
+            background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+            border-radius: 2px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            background-color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .color-picker { justify-content: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Whiteboard Creator</h1>
+        <p class="subtitle">Type your message and download your digital sign</p>
+    </header>
+
+    <div class="app-container">
+        
+        <div class="controls-card">
+            <div class="input-group">
+                <span class="tool-label">Your Message</span>
+                <textarea id="textInput" placeholder="Write something inspired..."></textarea>
+            </div>
+
+            <div class="toolbar">
+                <div>
+                    <span class="tool-label">Marker Color</span>
+                    <div class="color-picker">
+                        <div class="color-btn active" style="background:#111827; --selected-color:#111827" data-color="#111827" title="Black"></div>
+                        <div class="color-btn" style="background:#2563eb; --selected-color:#2563eb" data-color="#2563eb" title="Blue"></div>
+                        <div class="color-btn" style="background:#dc2626; --selected-color:#dc2626" data-color="#dc2626" title="Red"></div>
+                        <div class="color-btn" style="background:#059669; --selected-color:#059669" data-color="#059669" title="Green"></div>
+                        <div class="color-btn" style="background:#9333ea; --selected-color:#9333ea" data-color="#9333ea" title="Purple"></div>
+                    </div>
+                </div>
+                
+                <button id="btn-download" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Image
+                </button>
+            </div>
+        </div>
+
+        <div class="board-frame">
+            <canvas id="boardCanvas"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('boardCanvas');
+        const ctx = canvas.getContext('2d');
+        const textInput = document.getElementById('textInput');
+        const btnDownload = document.getElementById('btn-download');
+        const colorBtns = document.querySelectorAll('.color-btn');
+
+  
+        const canvasWidth = 1200;
+        const canvasHeight = 700;
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        let currentColor = "#111827";
+        let currentFontSize = 70; 
+
+        function draw() {
+            
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            
+            
+            let text = textInput.value.trim();
+            
+
+            if (!text) return;
+
+            
+            ctx.fillStyle = currentColor;
+            ctx.font = `${currentFontSize}px 'Permanent Marker', cursive`;
+            ctx.textBaseline = "top";
+            ctx.textAlign = "center";
+
+            
+            const maxWidth = canvasWidth - 160; /
+            const lineHeight = currentFontSize * 1.4;
+            
+            const paragraphs = text.split('\n');
+            let allLines = [];
+
+            paragraphs.forEach(paragraph => {
+                const words = paragraph.split(' ');
+                let currentLine = words[0] || "";
+
+                for (let i = 1; i < words.length; i++) {
+                    const word = words[i];
+                    const width = ctx.measureText(currentLine + " " + word).width;
+                    if (width < maxWidth) {
+                        currentLine += " " + word;
+                    } else {
+                        allLines.push(currentLine);
+                        currentLine = word;
+                    }
+                }
+                allLines.push(currentLine);
+            });
+
+            
+            const totalHeight = allLines.length * lineHeight;
+            let startY = (canvasHeight - totalHeight) / 2;
+
+            
+            allLines.forEach((line, index) => {
+                ctx.save();
+                const x = canvasWidth / 2;
+                const y = startY + (index * lineHeight);
+                
+                
+                const rot = (Math.random() - 0.5) * 0.01; 
+                ctx.translate(x, y);
+                ctx.rotate(rot);
+                
+                ctx.fillText(line, 0, 0);
+                ctx.restore();
+            });
+        }
+
+        
+        textInput.addEventListener('input', draw);
+
+        colorBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                colorBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentColor = e.target.getAttribute('data-color');
+                draw();
+            });
+        });
+
+        btnDownload.addEventListener('click', () => {
+            const link = document.createElement('a');
+            
+            const date = new Date();
+            const timestamp = date.getTime();
+            link.download = `whiteboard_${timestamp}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+
+        
+        draw();
+
+    </script>
+</body>
+                          </html>
