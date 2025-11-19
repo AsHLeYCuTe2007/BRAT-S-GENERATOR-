@@ -227,7 +227,7 @@
 <body>
 
     <header>
-        <h1>Whiteboard Creator</h1>
+        <h1>BRAT'S GENERATOR</h1>
         <p class="subtitle">Type your message and download your digital sign</p>
     </header>
 
@@ -299,7 +299,8 @@
             ctx.textAlign = "center";
 
             
-            const maxWidth = canvasWidth - 160; /
+            
+            const maxWidth = canvasWidth - 160; 
             const lineHeight = currentFontSize * 1.4;
             
             const paragraphs = text.split('\n');
@@ -365,8 +366,10 @@
         });
 
         
-        draw();
+        document.fonts.ready.then(() => {
+            draw();
+        });
 
     </script>
 </body>
-                          </html>
+</html>
