@@ -117,7 +117,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* FONT SELECTOR STYLES */
+        
         .font-select {
             padding: 10px 14px;
             border-radius: 10px;
@@ -138,14 +138,13 @@
         }
 
         .font-select option {
-            /* This targets the appearance of the text *before* the list is opened. */
+            
             padding: 8px;
             font-size: 1rem;
             color: #1f2937;
-            /* Use padding on options to improve list readability, if supported by browser */
+            
         }
-        /* END FONT SELECTOR STYLES */
-
+        
         .color-picker {
             display: flex;
             gap: 12px;
@@ -345,7 +344,7 @@
         let currentFontFamily = "'Permanent Marker', cursive";
 
         function draw() {
-            // Clear Board
+            
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -353,13 +352,13 @@
             if (!text) return;
 
             ctx.fillStyle = currentColor;
-            // Update font string based on selection
+            
             ctx.font = `${currentFontSize}px ${currentFontFamily}`;
             ctx.textBaseline = "top";
             ctx.textAlign = "center";
 
             const maxWidth = canvasWidth - 160; 
-            // Adjust line height slightly depending on font, but 1.4 is generally safe
+            
             const lineHeight = currentFontSize * 1.4;
             
             const paragraphs = text.split('\n');
@@ -390,7 +389,7 @@
                 const x = canvasWidth / 2;
                 const y = startY + (index * lineHeight);
                 
-                // Tiny rotation for organic feel
+                
                 const rot = (Math.random() - 0.5) * 0.015; 
                 ctx.translate(x, y);
                 ctx.rotate(rot);
@@ -400,16 +399,16 @@
             });
         }
 
-        // Event Listeners
+        
         textInput.addEventListener('input', draw);
 
-        // Change Font Listener
+        
         fontSelect.addEventListener('change', (e) => {
             currentFontFamily = e.target.value;
-            // Update textarea font too so user sees what they type
+            
             textInput.style.fontFamily = currentFontFamily;
             
-            // Wait for font to load then draw
+            
             document.fonts.load(`70px ${currentFontFamily}`).then(() => {
                 draw();
             });
@@ -432,7 +431,7 @@
             link.click();
         });
 
-        // Initial Draw
+        
         document.fonts.ready.then(() => {
             draw();
         });
