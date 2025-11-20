@@ -6,7 +6,8 @@
     <title>Kurapkia Brat's Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Permanent+Marker&family=Kalam:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Caveat:wght@700&family=Creepster&family=Dancing+Script:wght@700&family=Inter:wght@400;600;800&family=Kalam:wght@700&family=Monoton&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Press+Start+2P&family=Righteous&family=Rock+Salt&family=Shadows+Into+Light&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-color: #2563eb;
@@ -14,8 +15,6 @@
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --card-bg: rgba(255, 255, 255, 0.9);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --board-frame: #e2e8f0;
-            --board-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         body {
@@ -30,7 +29,6 @@
             color: #1f2937;
         }
 
-      
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -52,7 +50,6 @@
             font-size: 1.1rem;
         }
 
-        
         .app-container {
             display: flex;
             flex-direction: column;
@@ -61,7 +58,6 @@
             max-width: 800px;
         }
 
-        
         .controls-card {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
@@ -82,7 +78,8 @@
             font-size: 1.2rem;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
-            font-family: 'Permanent Marker', cursive;
+            
+            font-family: 'Permanent Marker', cursive; 
             color: #374151;
             background: #f9fafb;
             outline: none;
@@ -98,17 +95,18 @@
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
-        textarea::placeholder {
-            color: #9ca3af;
-            opacity: 0.7;
-        }
-
         .toolbar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: end;
             flex-wrap: wrap;
             gap: 15px;
+        }
+
+        .tool-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .tool-label {
@@ -117,8 +115,24 @@
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 8px;
-            display: block;
+        }
+
+        
+        .font-select {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            background-color: #f9fafb;
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.95rem;
+            outline: none;
+            min-width: 180px;
+        }
+        
+        .font-select:focus {
+            border-color: var(--primary-color);
         }
 
         .color-picker {
@@ -150,7 +164,6 @@
             z-index: 1;
         }
 
-  
         .btn {
             background-color: var(--primary-color);
             color: white;
@@ -165,6 +178,7 @@
             gap: 8px;
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            height: 45px; 
         }
 
         .btn:hover {
@@ -173,16 +187,10 @@
             box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        
         .board-frame {
             position: relative;
             background: #fff;
             border-radius: 4px;
-            
             border: 12px solid #d1d5db;
             border-top-color: #e5e7eb;
             border-left-color: #9ca3af;
@@ -195,7 +203,6 @@
             overflow: hidden;
         }
 
-        
         .board-frame::after {
             content: '';
             position: absolute;
@@ -215,11 +222,14 @@
             background-color: #fff;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             body { padding: 20px 10px; }
             h1 { font-size: 2rem; }
             .toolbar { flex-direction: column; align-items: stretch; }
             .color-picker { justify-content: center; }
+            .tool-section { width: 100%; }
+            .font-select { width: 100%; }
+            .btn { justify-content: center; }
         }
 
     </style>
@@ -228,7 +238,7 @@
 
     <header>
         <h1>BRAT'S GENERATOR</h1>
-        <p class="subtitle">Type your message and download your digital sign</p>
+        <p class="subtitle">Type your message, pick a style, and download</p>
     </header>
 
     <div class="app-container">
@@ -240,20 +250,51 @@
             </div>
 
             <div class="toolbar">
-                <div>
-                    <span class="tool-label">Marker Color</span>
+                <div class="tool-section">
+                    <span class="tool-label">Font Style</span>
+                    <select id="fontSelect" class="font-select">
+                        <optgroup label="Marker / Handwritten">
+                            <option value="'Permanent Marker', cursive" selected>Permanent Marker (Default)</option>
+                            <option value="'Rock Salt', cursive">Rock Salt (Messy)</option>
+                            <option value="'Kalam', cursive">Kalam (Cute Marker)</option>
+                            <option value="'Caveat', cursive">Caveat (Thin Pen)</option>
+                            <option value="'Shadows Into Light', cursive">Shadows Into Light</option>
+                        </optgroup>
+                        <optgroup label="Bold / Display">
+                            <option value="'Bangers', system-ui">Bangers (Comic)</option>
+                            <option value="'Oswald', sans-serif">Oswald (Tall)</option>
+                            <option value="'Black Ops One', system-ui">Black Ops (Military)</option>
+                            <option value="'Righteous', system-ui">Righteous (Modern)</option>
+                        </optgroup>
+                        <optgroup label="Retro / Vibes">
+                            <option value="'Creepster', system-ui">Creepster (Horror)</option>
+                            <option value="'VT323', monospace">VT323 (Pixel)</option>
+                            <option value="'Press Start 2P', cursive">Press Start (Game)</option>
+                            <option value="'Monoton', cursive">Monoton (Neon)</option>
+                        </optgroup>
+                        <optgroup label="Classic / Typewriter">
+                            <option value="'Special Elite', cursive">Special Elite (Typewriter)</option>
+                            <option value="'Pacifico', cursive">Pacifico (Cursive)</option>
+                            <option value="'Dancing Script', cursive">Dancing Script</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="tool-section">
+                    <span class="tool-label">Ink Color</span>
                     <div class="color-picker">
                         <div class="color-btn active" style="background:#111827; --selected-color:#111827" data-color="#111827" title="Black"></div>
                         <div class="color-btn" style="background:#2563eb; --selected-color:#2563eb" data-color="#2563eb" title="Blue"></div>
                         <div class="color-btn" style="background:#dc2626; --selected-color:#dc2626" data-color="#dc2626" title="Red"></div>
                         <div class="color-btn" style="background:#059669; --selected-color:#059669" data-color="#059669" title="Green"></div>
                         <div class="color-btn" style="background:#9333ea; --selected-color:#9333ea" data-color="#9333ea" title="Purple"></div>
+                        <div class="color-btn" style="background:#ff00bf; --selected-color:#ff00bf" data-color="#ff00bf" title="Pink"></div>
                     </div>
                 </div>
                 
                 <button id="btn-download" class="btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Image
+                    Download
                 </button>
             </div>
         </div>
@@ -268,39 +309,35 @@
         const canvas = document.getElementById('boardCanvas');
         const ctx = canvas.getContext('2d');
         const textInput = document.getElementById('textInput');
+        const fontSelect = document.getElementById('fontSelect');
         const btnDownload = document.getElementById('btn-download');
         const colorBtns = document.querySelectorAll('.color-btn');
 
-  
         const canvasWidth = 1200;
         const canvasHeight = 700;
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
 
         let currentColor = "#111827";
-        let currentFontSize = 70; 
+        let currentFontSize = 75; 
+        let currentFontFamily = "'Permanent Marker', cursive";
 
         function draw() {
             
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            
-            
             let text = textInput.value.trim();
-            
-
             if (!text) return;
 
-            
             ctx.fillStyle = currentColor;
-            ctx.font = `${currentFontSize}px 'Permanent Marker', cursive`;
+            
+            ctx.font = `${currentFontSize}px ${currentFontFamily}`;
             ctx.textBaseline = "top";
             ctx.textAlign = "center";
 
-            
-            
             const maxWidth = canvasWidth - 160; 
+            
             const lineHeight = currentFontSize * 1.4;
             
             const paragraphs = text.split('\n');
@@ -323,18 +360,16 @@
                 allLines.push(currentLine);
             });
 
-            
             const totalHeight = allLines.length * lineHeight;
             let startY = (canvasHeight - totalHeight) / 2;
 
-            
             allLines.forEach((line, index) => {
                 ctx.save();
                 const x = canvasWidth / 2;
                 const y = startY + (index * lineHeight);
                 
                 
-                const rot = (Math.random() - 0.5) * 0.01; 
+                const rot = (Math.random() - 0.5) * 0.015; 
                 ctx.translate(x, y);
                 ctx.rotate(rot);
                 
@@ -345,6 +380,18 @@
 
         
         textInput.addEventListener('input', draw);
+
+        
+        fontSelect.addEventListener('change', (e) => {
+            currentFontFamily = e.target.value;
+            
+            textInput.style.fontFamily = currentFontFamily;
+            
+            
+            document.fonts.load(`70px ${currentFontFamily}`).then(() => {
+                draw();
+            });
+        });
 
         colorBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -357,10 +404,8 @@
 
         btnDownload.addEventListener('click', () => {
             const link = document.createElement('a');
-            
             const date = new Date();
-            const timestamp = date.getTime();
-            link.download = `whiteboard_${timestamp}.png`;
+            link.download = `brat_gen_${date.getTime()}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
