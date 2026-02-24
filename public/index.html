@@ -3,439 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurapkia Brat's Generator</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Caveat:wght@700&family=Creepster&family=Dancing+Script:wght@700&family=EB+Garamond:wght@600&family=Great+Vibes&family=Inter:wght@400;600;800&family=Kalam:wght@700&family=Metal+Mania&family=Monoton&family=Montserrat:wght@600&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Press+Start+2P&family=Righteous&family=Roboto+Slab:wght@700&family=Rock+Salt&family=Shadows+Into+Light&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-    
+    <title>𝙺𝚄𝚁𝙰𝙿𝙸𝙺𝙰 | 𝙱𝚁𝙰𝚃 𝙶𝙴𝙽</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Poppins:wght@300;400;600;700&family=Permanent+Marker&family=Righteous&family=VT323&family=Bangers&family=Black+Ops+One&family=Creepster&family=Orbitron:wght@700&family=Press+Start+2P&family=Rock+Salt&family=Special+Elite&family=Pacifico&family=Dancing+Script:wght@700&family=Shadows+Into+Light&family=Kaushan+Script&family=Metal+Mania&family=Monoton&family=Eater&family=Nosifer&family=Lobster&family=Abril+Fatface&family=UnifrakturMaguntia&family=Cinzel+Decorative:wght@700&family=Faster+One&family=Fredericka+the+Great&family=Pirata+One&family=Rubik+Glitch&family=Bungee+Shade&family=Alumni+Sans+Inline+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --accent: #ff0000;
+            --gold: #ffcc00;
+            --bg: #05070a; 
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 204, 0, 0.15);
+            --verify-blue: #0095f6;
         }
-
-        body {
-            background: var(--bg-gradient);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            color: #1f2937;
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+        input, textarea, select { user-select: text; }
+        body { background-color: var(--bg); color: #fff; overflow-x: hidden; padding-bottom: 60px; cursor: pointer; }
+        .hero { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .cover-area {
+            width: 100%; height: 180px; 
+            background: linear-gradient(to bottom, transparent, var(--bg)), url('https://i.gifer.com/CnZY.gif');
+            background-size: cover; background-position: center; border-bottom: 2px solid var(--accent);
         }
-
-        h1 {
-            font-weight: 800;
-            font-size: 2.5rem;
-            margin: 0;
-            background: linear-gradient(to right, #2563eb, #4f46e5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
+        .profile-container { margin-top: -60px; text-align: center; z-index: 10; }
+        .profile-hex {
+            width: 120px; height: 120px; padding: 4px; background: var(--bg);
+            border-radius: 50%; display: inline-block;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); border: 2px solid var(--gold);
         }
-
-        p.subtitle {
-            color: #6b7280;
-            margin-top: 8px;
-            font-size: 1.1rem;
+        .profile-hex img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .name-wrapper { margin-top: 15px; display: flex; gap: 3px; justify-content: center; align-items: center; font-family: 'Syncopate', sans-serif; }
+        .wave-letter {
+            font-size: 1.8rem; font-weight: 700; color: var(--gold);
+            text-transform: uppercase; display: inline-block;
+            animation: moveWave 2.5s ease-in-out infinite;
+            animation-delay: calc(0.15s * var(--i));
         }
-
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            max-width: 800px;
+        @keyframes moveWave {
+            0%, 100% { transform: translateY(0); color: var(--gold); }
+            50% { transform: translateY(-10px); color: var(--accent); filter: drop-shadow(0 0 8px var(--accent)); }
         }
-
-        .controls-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        .verify-badge { color: var(--verify-blue); font-size: 1.2rem; margin-left: 5px; filter: drop-shadow(0 0 5px rgba(0, 149, 246, 0.5)); }
+        .tagline { text-align: center; color: var(--gold); opacity: 0.5; letter-spacing: 4px; font-size: 0.6rem; margin-top: 5px; text-transform: uppercase; }
+        section { padding: 40px 5%; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .tool-header {
+            font-family: 'Syncopate', sans-serif; font-size: 0.9rem;
+            color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+            letter-spacing: 2px;
         }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
+        .tool-header::after { content: ""; height: 1px; flex-grow: 1; background: linear-gradient(to right, var(--gold), transparent); opacity: 0.2; }
+        .gen-container {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 15px; padding: 25px; box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-
         textarea {
-            width: 100%;
-            padding: 16px;
-            font-size: 1.2rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-family: 'Permanent Marker', cursive; 
-            color: #374151;
-            background: #f9fafb;
-            outline: none;
-            resize: vertical;
-            min-height: 80px;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
+            width: 100%; height: 100px; background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border); border-radius: 10px;
+            color: #fff; padding: 15px; font-size: 1.1rem; outline: none; margin-bottom: 20px;
         }
-
-        textarea:focus {
-            border-color: var(--primary-color);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        .toolbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
+        .tool-label { font-family: 'Syncopate', sans-serif; font-size: 0.6rem; color: var(--gold); display: block; margin-bottom: 8px; }
+        select { width: 100%; padding: 12px; background: #111; border: 1px solid var(--glass-border); color: #fff; border-radius: 5px; cursor: pointer; }
+        .btn-download {
+            background: var(--gold); color: #000; border: none; padding: 14px; border-radius: 5px;
+            font-family: 'Syncopate', sans-serif; font-size: 0.7rem; font-weight: 700; cursor: pointer;
         }
-
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .tool-section {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .tool-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        
-        .font-select {
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 2px solid #e5e7eb;
-            background-color: #f9fafb;
-            font-family: 'Inter', sans-serif;
-            color: #374151;
-            cursor: pointer;
-            font-size: 0.95rem;
-            outline: none;
-            min-width: 180px;
-            transition: border-color 0.2s;
-        }
-        
-        .font-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
-        }
-
-        .font-select option {
-            
-            padding: 8px;
-            font-size: 1rem;
-            color: #1f2937;
-            
-        }
-        
-        .color-picker {
-            display: flex;
-            gap: 12px;
-            background: #f3f4f6;
-            padding: 8px;
-            border-radius: 50px;
-        }
-
-        .color-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .color-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .color-btn.active {
-            transform: scale(1.15);
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--selected-color, #000);
-            z-index: 1;
-        }
-
-        .btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-            height: 45px; 
-        }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
-        }
-
         .board-frame {
-            position: relative;
-            background: #fff;
-            border-radius: 4px;
-            border: 12px solid #d1d5db;
-            border-top-color: #e5e7eb;
-            border-left-color: #9ca3af;
-            border-bottom-color: #9ca3af;
-            border-right-color: #e5e7eb;
-            box-shadow: 
-                inset 0 0 20px rgba(0,0,0,0.05),
-                0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            margin-top: 30px; padding: 12px; background: #111;
+            border-radius: 10px; border: 1px solid #333;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
-
-        .board-frame::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: -14px;
-            right: -14px;
-            height: 12px;
-            background: linear-gradient(to bottom, #d1d5db, #9ca3af);
-            border-radius: 2px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .canvas-container {
+            border: 6px solid #ffffff; background: #ffffff; border-radius: 4px; overflow: hidden;
         }
-
-        canvas {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            background-color: #fff;
-        }
-
-        @media (max-width: 700px) {
-            body { padding: 20px 10px; }
-            h1 { font-size: 2rem; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .color-picker { justify-content: center; }
-            .tool-section { width: 100%; }
-            .font-select { width: 100%; }
-            .btn { justify-content: center; }
-        }
-
+        canvas { display: block; width: 100%; height: auto; }
     </style>
 </head>
-<body>
-
-    <header>
-        <h1>BRAT'S GENERATOR</h1>
-        <p class="subtitle">Type your message, pick a style, and download</p>
-    </header>
-
-    <div class="app-container">
-        
-        <div class="controls-card">
-            <div class="input-group">
-                <span class="tool-label">Your Message</span>
-                <textarea id="textInput" placeholder="Write something inspired..."></textarea>
+<body onclick="playMusic()">
+    <audio id="bgMusic" loop><source src="kurapika.mp3" type="audio/mpeg"></audio>
+    <header class="hero">
+        <div class="cover-area"></div>
+        <div class="profile-container">
+            <div class="profile-hex"><img src="https://i.gifer.com/94k1.gif"></div>
+            <div class="name-wrapper">
+                <span class="wave-letter" style="--i:1">K</span><span class="wave-letter" style="--i:2">U</span><span class="wave-letter" style="--i:3">R</span><span class="wave-letter" style="--i:4">A</span><span class="wave-letter" style="--i:5">P</span><span class="wave-letter" style="--i:6">I</span><span class="wave-letter" style="--i:7">K</span><span class="wave-letter" style="--i:8">A</span>
+                <i class="fas fa-check-circle verify-badge"></i>
             </div>
-
+            <p class="tagline">GØDZ-MØDZ - UGK • Fullstack Dev</p>
+        </div>
+    </header>
+    <section>
+        <div class="tool-header">KURAPIKA_BRATS_GEN v1</div>
+        <div class="gen-container">
+            <span class="tool-label">SYSTEM_INPUT</span>
+            <textarea id="textInput" placeholder="TYPE YOUR MESSAGE..."></textarea>
             <div class="toolbar">
-                <div class="tool-section">
-                    <span class="tool-label">Font Style</span>
-                    <select id="fontSelect" class="font-select">
-                        <optgroup label="Marker / Handwriting">
-                            <option value="'Permanent Marker', cursive" style="font-family:'Permanent Marker', cursive;" selected>Permanent Marker (Default)</option>
-                            <option value="'Rock Salt', cursive" style="font-family:'Rock Salt', cursive;">Rock Salt (Messy)</option>
-                            <option value="'Kalam', cursive" style="font-family:'Kalam', cursive;">Kalam (Cute Marker)</option>
-                            <option value="'Caveat', cursive" style="font-family:'Caveat', cursive;">Caveat (Thin Pen)</option>
-                            <option value="'Shadows Into Light', cursive" style="font-family:'Shadows Into Light', cursive;">Shadows Into Light</option>
-                        </optgroup>
-                        
-                        <optgroup label="Cursive / Elegant">
-                            <option value="'Great Vibes', cursive" style="font-family:'Great Vibes', cursive;">Great Vibes (Formal Cursive)</option>
-                            <option value="'Pacifico', cursive" style="font-family:'Pacifico', cursive;">Pacifico (Handwritten Script)</option>
-                            <option value="'Dancing Script', cursive" style="font-family:'Dancing Script', cursive;">Dancing Script</option>
-                        </optgroup>
-
-                        <optgroup label="Bold / Modern Display">
-                            <option value="'Montserrat', sans-serif" style="font-family:'Montserrat', sans-serif;">Montserrat (Clean Modern)</option>
-                            <option value="'Oswald', sans-serif" style="font-family:'Oswald', sans-serif;">Oswald (Tall)</option>
-                            <option value="'Bangers', system-ui" style="font-family:'Bangers', system-ui;">Bangers (Comic)</option>
-                            <option value="'Righteous', system-ui" style="font-family:'Righteous', system-ui;">Righteous (Modern)</option>
-                        </optgroup>
-                        
-                        <optgroup label="Serif / Slab">
-                            <option value="'EB Garamond', serif" style="font-family:'EB Garamond', serif;">EB Garamond (Classic Elegant)</option>
-                            <option value="'Roboto Slab', serif" style="font-family:'Roboto Slab', serif;">Roboto Slab (Slab Serif)</option>
-                            <option value="'Special Elite', cursive" style="font-family:'Special Elite', cursive;">Special Elite (Typewriter)</option>
-                        </optgroup>
-
-                        <optgroup label="Retro / Vibes">
-                            <option value="'Creepster', system-ui" style="font-family:'Creepster', system-ui;">Creepster (Horror)</option>
-                            <option value="'Metal Mania', system-ui" style="font-family:'Metal Mania', system-ui;">Metal Mania (Distressed)</option>
-                            <option value="'VT323', monospace" style="font-family:'VT323', monospace;">VT323 (Pixel)</option>
-                            <option value="'Press Start 2P', cursive" style="font-family:'Press Start 2P', cursive;">Press Start (Game)</option>
-                            <option value="'Monoton', cursive" style="font-family:'Monoton', cursive;">Monoton (Neon)</option>
-                            <option value="'Black Ops One', system-ui" style="font-family:'Black Ops One', system-ui;">Black Ops (Military)</option>
-                        </optgroup>
+                <div>
+                    <span class="tool-label">FONT_ENCODING</span>
+                    <select id="fontSelect">
+                        <option value="'Righteous', cursive">Righteous</option>
+                        <option value="'Orbitron', sans-serif">Orbitron</option>
+                        <option value="'Syncopate', sans-serif">Syncopate</option>
+                        <option value="'VT323', monospace">Pixel VT323</option>
+                        <option value="'Press Start 2P', cursive">8-Bit Gaming</option>
+                        <option value="'Monoton', cursive">Neon Monoton</option>
+                        <option value="'Permanent Marker', cursive">Permanent Marker</option>
+                        <option value="'Rock Salt', cursive">Rock Salt</option>
+                        <option value="'Pacifico', cursive">Pacifico</option>
+                        <option value="'Dancing Script', cursive">Dancing Script</option>
+                        <option value="'Creepster', cursive">Creepster</option>
+                        <option value="'Metal Mania', cursive">Metal Mania</option>
+                        <option value="'Nosifer', cursive">Nosifer</option>
+                        <option value="'Cinzel Decorative', serif">Cinzel Decorative</option>
+                        <option value="'Pirata One', cursive">Pirata One</option>
+                        <option value="'Special Elite', cursive">Typewriter</option>
+                        <option value="'Bungee Shade', cursive">Bungee Shade</option>
+                        <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
                     </select>
                 </div>
-
-                <div class="tool-section">
-                    <span class="tool-label">Ink Color</span>
-                    <div class="color-picker">
-                        <div class="color-btn active" style="background:#111827; --selected-color:#111827" data-color="#111827" title="Black"></div>
-                        <div class="color-btn" style="background:#2563eb; --selected-color:#2563eb" data-color="#2563eb" title="Blue"></div>
-                        <div class="color-btn" style="background:#dc2626; --selected-color:#dc2626" data-color="#dc2626" title="Red"></div>
-                        <div class="color-btn" style="background:#059669; --selected-color:#059669" data-color="#059669" title="Green"></div>
-                        <div class="color-btn" style="background:#9333ea; --selected-color:#9333ea" data-color="#9333ea" title="Purple"></div>
-                        <div class="color-btn" style="background:#ff00bf; --selected-color:#ff00bf" data-color="#ff00bf" title="Pink"></div>
-                    </div>
+                <div>
+                    <span class="tool-label">INK_COLOR</span>
+                    <select id="colorSelect">
+                        <option value="#000000">VOID_BLACK</option>
+                        <option value="#ff0000">SCARLET_RED</option>
+                        <option value="#ffcc00">GOLD_AURA</option>
+                        <option value="#0084ff">SYSTEM_BLUE</option>
+                        <option value="#00ff00">NEON_GREEN</option>
+                    </select>
                 </div>
-                
-                <button id="btn-download" class="btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download
-                </button>
+                <button class="btn-download" onclick="downloadImage()">DOWNLOAD_PNG</button>
             </div>
         </div>
-
         <div class="board-frame">
-            <canvas id="boardCanvas"></canvas>
+            <div class="canvas-container"><canvas id="boardCanvas"></canvas></div>
         </div>
-
-    </div>
-
+    </section>
     <script>
+        const music = document.getElementById('bgMusic');
+        let isStarted = false;
+        function playMusic() { if (!isStarted) { music.play().then(() => isStarted = true).catch(e => {}); } }
         const canvas = document.getElementById('boardCanvas');
         const ctx = canvas.getContext('2d');
         const textInput = document.getElementById('textInput');
         const fontSelect = document.getElementById('fontSelect');
-        const btnDownload = document.getElementById('btn-download');
-        const colorBtns = document.querySelectorAll('.color-btn');
-
-        const canvasWidth = 1200;
-        const canvasHeight = 700;
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-
-        let currentColor = "#111827";
-        let currentFontSize = 75; 
-        let currentFontFamily = "'Permanent Marker', cursive";
-
+        const colorSelect = document.getElementById('colorSelect');
+        canvas.width = 1200; canvas.height = 850;
         function draw() {
-            
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            let text = textInput.value.trim();
-            if (!text) return;
-
-            ctx.fillStyle = currentColor;
-            
-            ctx.font = `${currentFontSize}px ${currentFontFamily}`;
-            ctx.textBaseline = "top";
-            ctx.textAlign = "center";
-
-            const maxWidth = canvasWidth - 160; 
-            
-            const lineHeight = currentFontSize * 1.4;
-            
-            const paragraphs = text.split('\n');
-            let allLines = [];
-
-            paragraphs.forEach(paragraph => {
-                const words = paragraph.split(' ');
-                let currentLine = words[0] || "";
-
-                for (let i = 1; i < words.length; i++) {
-                    const word = words[i];
-                    const width = ctx.measureText(currentLine + " " + word).width;
-                    if (width < maxWidth) {
-                        currentLine += " " + word;
-                    } else {
-                        allLines.push(currentLine);
-                        currentLine = word;
-                    }
-                }
-                allLines.push(currentLine);
-            });
-
-            const totalHeight = allLines.length * lineHeight;
-            let startY = (canvasHeight - totalHeight) / 2;
-
-            allLines.forEach((line, index) => {
-                ctx.save();
-                const x = canvasWidth / 2;
-                const y = startY + (index * lineHeight);
-                
-                
-                const rot = (Math.random() - 0.5) * 0.015; 
-                ctx.translate(x, y);
-                ctx.rotate(rot);
-                
-                ctx.fillText(line, 0, 0);
-                ctx.restore();
-            });
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const text = textInput.value.trim(); if (!text) return;
+            ctx.fillStyle = colorSelect.value; ctx.font = `95px ${fontSelect.value}`;
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            const lines = text.split('\n'); const lineHeight = 115;
+            const startY = (canvas.height / 2) - ((lines.length - 1) * lineHeight / 2);
+            lines.forEach((line, i) => { ctx.fillText(line, canvas.width / 2, startY + (i * lineHeight)); });
         }
-
-        
         textInput.addEventListener('input', draw);
-
-        
-        fontSelect.addEventListener('change', (e) => {
-            currentFontFamily = e.target.value;
-            
-            textInput.style.fontFamily = currentFontFamily;
-            
-            
-            document.fonts.load(`70px ${currentFontFamily}`).then(() => {
-                draw();
-            });
-        });
-
-        colorBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                colorBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentColor = e.target.getAttribute('data-color');
-                draw();
-            });
-        });
-
-        btnDownload.addEventListener('click', () => {
+        fontSelect.addEventListener('change', draw);
+        colorSelect.addEventListener('change', draw);
+        function downloadImage() {
             const link = document.createElement('a');
-            const date = new Date();
-            link.download = `brat_gen_${date.getTime()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        });
-
-        
-        document.fonts.ready.then(() => {
-            draw();
-        });
-
+            link.download = `godz_brat_${Date.now()}.png`; link.href = canvas.toDataURL(); link.click();
+        }
+        window.onload = draw;
     </script>
 </body>
 </html>
