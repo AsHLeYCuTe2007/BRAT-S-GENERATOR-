@@ -10,10 +10,10 @@
         :root {
             --accent: #ff0000;
             --gold: #ffcc00;
+            --blue: #0095f6;
             --bg: #05070a; 
             --glass: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 204, 0, 0.15);
-            --verify-blue: #0095f6;
         }
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
@@ -22,65 +22,97 @@
             user-select: none;
         }
         input, textarea, select { user-select: text; }
-        body { background-color: var(--bg); color: #fff; overflow-x: hidden; padding-bottom: 60px; cursor: pointer; }
+        body { background-color: var(--bg); color: #fff; overflow-x: hidden; padding-bottom: 50px; cursor: pointer; }
         .hero { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .cover-area {
-            width: 100%; height: 180px; 
-            background: linear-gradient(to bottom, transparent, var(--bg)), url('https://i.gifer.com/CnZY.gif');
-            background-size: cover; background-position: center; border-bottom: 2px solid var(--accent);
+            width: 100%; height: 160px; 
+            background: linear-gradient(to bottom, transparent, var(--bg)), url('https://i.gifer.com/94k3.gif');
+            background-size: cover; background-position: center;
+            border-bottom: 2px solid var(--accent);
         }
-        .profile-container { margin-top: -60px; text-align: center; z-index: 10; }
+        .profile-container { margin-top: -50px; text-align: center; z-index: 10; margin-bottom: 30px; }
         .profile-hex {
-            width: 120px; height: 120px; padding: 4px; background: var(--bg);
+            width: 100px; height: 100px; padding: 3px; background: var(--bg);
             border-radius: 50%; display: inline-block;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); border: 2px solid var(--gold);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); border: 2px solid var(--gold);
         }
         .profile-hex img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .name-wrapper { margin-top: 15px; display: flex; gap: 3px; justify-content: center; align-items: center; font-family: 'Syncopate', sans-serif; }
-        .wave-letter {
-            font-size: 1.8rem; font-weight: 700; color: var(--gold);
-            text-transform: uppercase; display: inline-block;
-            animation: moveWave 2.5s ease-in-out infinite;
-            animation-delay: calc(0.15s * var(--i));
+        .name-wrapper { 
+            margin-top: 10px; 
+            color: var(--gold); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        @keyframes moveWave {
-            0%, 100% { transform: translateY(0); color: var(--gold); }
-            50% { transform: translateY(-10px); color: var(--accent); filter: drop-shadow(0 0 8px var(--accent)); }
+        .wave-text { 
+            display: flex; 
+            font-family: 'Syncopate', sans-serif; 
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
         }
-        .verify-badge { color: var(--verify-blue); font-size: 1.2rem; margin-left: 5px; filter: drop-shadow(0 0 5px rgba(0, 149, 246, 0.5)); }
-        .tagline { text-align: center; color: var(--gold); opacity: 0.5; letter-spacing: 4px; font-size: 0.6rem; margin-top: 5px; text-transform: uppercase; }
-        section { padding: 40px 5%; max-width: 1200px; margin: 0 auto; width: 100%; }
-        .tool-header {
-            font-family: 'Syncopate', sans-serif; font-size: 0.9rem;
+        .wave-text span {
+            display: inline-block;
+            animation: waveAnim 2s infinite ease-in-out;
+            animation-delay: calc(0.1s * var(--i));
+        }
+        @keyframes waveAnim {
+            0%, 40%, 100% { transform: translateY(0); }
+            20% { transform: translateY(-10px); color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        }
+        .verified-badge {
+            color: var(--blue);
+            font-size: 1.1rem;
+            margin-top: -2px;
+            filter: drop-shadow(0 0 5px rgba(0, 149, 246, 0.5));
+        }
+        section { padding: 0 5%; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .section-header {
+            font-family: 'Syncopate', sans-serif; font-size: 0.7rem; font-weight: 700;
             color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
-            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        .tool-header::after { content: ""; height: 1px; flex-grow: 1; background: linear-gradient(to right, var(--gold), transparent); opacity: 0.2; }
-        .gen-container {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 15px; padding: 25px; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        .section-header::after { content: ""; height: 1px; flex-grow: 1; background: linear-gradient(to right, var(--gold), transparent); opacity: 0.2; }
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
+        .form-group { margin-bottom: 15px; }
+        .form-label { font-family: 'Syncopate', sans-serif; font-size: 0.55rem; font-weight: 700; color: #888; display: block; margin-bottom: 8px; }
         textarea {
-            width: 100%; height: 100px; background: rgba(0,0,0,0.3);
-            border: 1px solid var(--glass-border); border-radius: 10px;
-            color: #fff; padding: 15px; font-size: 1.1rem; outline: none; margin-bottom: 20px;
+            width: 100%; height: 100px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 8px; color: #fff; font-size: 1rem; outline: none;
+            transition: 0.3s; resize: none;
         }
-        .toolbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
-        .tool-label { font-family: 'Syncopate', sans-serif; font-size: 0.6rem; color: var(--gold); display: block; margin-bottom: 8px; }
-        select { width: 100%; padding: 12px; background: #111; border: 1px solid var(--glass-border); color: #fff; border-radius: 5px; cursor: pointer; }
-        .btn-download {
-            background: var(--gold); color: #000; border: none; padding: 14px; border-radius: 5px;
-            font-family: 'Syncopate', sans-serif; font-size: 0.7rem; font-weight: 700; cursor: pointer;
+        textarea:focus { border-color: var(--accent); background: rgba(255, 0, 0, 0.05); }
+        .toolbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        select { 
+            width: 100%; padding: 12px; background: #111; border: 1px solid rgba(255,255,255,0.05); 
+            color: #fff; border-radius: 8px; font-size: 0.85rem; cursor: pointer; outline: none;
         }
+        select:focus { border-color: var(--accent); }
+        .btn-execute {
+            width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--gold);
+            background: transparent; color: var(--gold); font-family: 'Syncopate', sans-serif;
+            font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: 0.3s;
+            margin-top: 10px; text-transform: uppercase;
+        }
+        .btn-execute:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255, 204, 0, 0.3); }
         .board-frame {
-            margin-top: 30px; padding: 12px; background: #111;
-            border-radius: 10px; border: 1px solid #333;
+            margin-top: 20px; padding: 10px; background: #111;
+            border-radius: 12px; border: 1px solid #333;
             box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
         .canvas-container {
             border: 6px solid #ffffff; background: #ffffff; border-radius: 4px; overflow: hidden;
         }
         canvas { display: block; width: 100%; height: auto; }
+        #liveClock { font-family: 'Syncopate', sans-serif; font-size: 0.6rem; font-weight: 700; color: var(--gold); opacity: 0.5; margin-top: 20px; text-align: center; }
     </style>
 </head>
 <body onclick="playMusic()">
@@ -90,20 +122,24 @@
         <div class="profile-container">
             <div class="profile-hex"><img src="https://i.gifer.com/94k1.gif"></div>
             <div class="name-wrapper">
-                <span class="wave-letter" style="--i:1">K</span><span class="wave-letter" style="--i:2">U</span><span class="wave-letter" style="--i:3">R</span><span class="wave-letter" style="--i:4">A</span><span class="wave-letter" style="--i:5">P</span><span class="wave-letter" style="--i:6">I</span><span class="wave-letter" style="--i:7">K</span><span class="wave-letter" style="--i:8">A</span>
-                <i class="fas fa-check-circle verify-badge"></i>
+                <div class="wave-text">
+                    <span style="--i:1">K</span><span style="--i:2">U</span><span style="--i:3">R</span><span style="--i:4">A</span><span style="--i:5">P</span><span style="--i:6">I</span><span style="--i:7">K</span><span style="--i:8">A</span>
+                </div>
+                <i class="fas fa-check-circle verified-badge"></i>
             </div>
-            <p class="tagline">GØDZ-MØDZ - UGK • Fullstack Dev</p>
+            <p style="font-size: 0.6rem; color: var(--accent); letter-spacing: 2px; margin-top: 5px; font-family: 'Syncopate'; font-weight: 700;">GØDZ-MØDZ - UGK</p>
         </div>
     </header>
     <section>
-        <div class="tool-header">KURAPIKA_BRATS_GEN v1</div>
-        <div class="gen-container">
-            <span class="tool-label">SYSTEM_INPUT</span>
-            <textarea id="textInput" placeholder="TYPE YOUR MESSAGE..."></textarea>
+        <div class="section-header">BRATS_GENERATOR</div>
+        <div class="card">
+            <div class="form-group">
+                <label class="form-label">YOUR_TEXT</label>
+                <textarea id="textInput" placeholder="TYPE YOUR TEXT HERE..."></textarea>
+            </div>
             <div class="toolbar">
-                <div>
-                    <span class="tool-label">FONT_ENCODING</span>
+                <div class="form-group">
+                    <label class="form-label">FONT_LIST</label>
                     <select id="fontSelect">
                         <option value="'Righteous', cursive">Righteous</option>
                         <option value="'Orbitron', sans-serif">Orbitron</option>
@@ -125,8 +161,8 @@
                         <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
                     </select>
                 </div>
-                <div>
-                    <span class="tool-label">INK_COLOR</span>
+                <div class="form-group">
+                    <label class="form-label">TYLE_COLOR</label>
                     <select id="colorSelect">
                         <option value="#000000">VOID_BLACK</option>
                         <option value="#ff0000">SCARLET_RED</option>
@@ -135,38 +171,54 @@
                         <option value="#00ff00">NEON_GREEN</option>
                     </select>
                 </div>
-                <button class="btn-download" onclick="downloadImage()">DOWNLOAD_PNG</button>
+            </div>
+            <button class="btn-execute" onclick="downloadImage()">DOWNLOAD_PNG</button>
+        </div>
+        <div class="section-header">OUTPUT_PREVIEW</div>
+        <div class="board-frame">
+            <div class="canvas-container">
+                <canvas id="boardCanvas"></canvas>
             </div>
         </div>
-        <div class="board-frame">
-            <div class="canvas-container"><canvas id="boardCanvas"></canvas></div>
-        </div>
+        <div id="liveClock">00:00:00 PM</div>
     </section>
     <script>
         const music = document.getElementById('bgMusic');
         let isStarted = false;
         function playMusic() { if (!isStarted) { music.play().then(() => isStarted = true).catch(e => {}); } }
+        function updateClock() { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }
+        setInterval(updateClock, 1000); updateClock();
         const canvas = document.getElementById('boardCanvas');
         const ctx = canvas.getContext('2d');
         const textInput = document.getElementById('textInput');
         const fontSelect = document.getElementById('fontSelect');
         const colorSelect = document.getElementById('colorSelect');
-        canvas.width = 1200; canvas.height = 850;
+        canvas.width = 1200; 
+        canvas.height = 850;
         function draw() {
-            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            const text = textInput.value.trim(); if (!text) return;
-            ctx.fillStyle = colorSelect.value; ctx.font = `95px ${fontSelect.value}`;
-            ctx.textAlign = "center"; ctx.textBaseline = "middle";
-            const lines = text.split('\n'); const lineHeight = 115;
+            ctx.fillStyle = "#ffffff"; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const text = textInput.value.trim(); 
+            if (!text) return;
+            ctx.fillStyle = colorSelect.value; 
+            ctx.font = `95px ${fontSelect.value}`;
+            ctx.textAlign = "center"; 
+            ctx.textBaseline = "middle";
+            const lines = text.split('\n'); 
+            const lineHeight = 115;
             const startY = (canvas.height / 2) - ((lines.length - 1) * lineHeight / 2);
-            lines.forEach((line, i) => { ctx.fillText(line, canvas.width / 2, startY + (i * lineHeight)); });
+            lines.forEach((line, i) => { 
+                ctx.fillText(line, canvas.width / 2, startY + (i * lineHeight)); 
+            });
         }
         textInput.addEventListener('input', draw);
         fontSelect.addEventListener('change', draw);
         colorSelect.addEventListener('change', draw);
         function downloadImage() {
             const link = document.createElement('a');
-            link.download = `godz_brat_${Date.now()}.png`; link.href = canvas.toDataURL(); link.click();
+            link.download = `godz_brat_${Date.now()}.png`; 
+            link.href = canvas.toDataURL(); 
+            link.click();
         }
         window.onload = draw;
     </script>
