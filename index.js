@@ -1,32 +1,25 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.post('/generate-brat', (req, res) => {
-    const { text } = req.body;
-
-    if (!text) {
-        return res.status(400).json({ error: '.' });
-    }
-
-    const bratText = text.toLowerCase().trim();
-
-    res.json({
-        original: text,
-        bratified: bratText,
-        color: "#8ACE00",
-        font: "Arial"
-    });
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  res.status(200).json({ status: 'success' });
 });
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Brat Generator is running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;
